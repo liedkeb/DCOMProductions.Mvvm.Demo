@@ -24,8 +24,6 @@ namespace DCOMProductions.MvvmDemo.Views
         public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = new CustomerViewModel();
         }
     }
 }

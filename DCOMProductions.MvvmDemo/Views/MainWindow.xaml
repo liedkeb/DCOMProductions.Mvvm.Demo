@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DCOMProductions.MvvmDemo.Views"
+        xmlns:local="clr-namespace:DCOMProductions.MvvmDemo.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="300">
+    <Window.DataContext>
+        <local:CustomerViewModel />
+    </Window.DataContext>
     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
         <Label>Customer Name:</Label>
         <TextBox Width="136" Text="{Binding Customer.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
