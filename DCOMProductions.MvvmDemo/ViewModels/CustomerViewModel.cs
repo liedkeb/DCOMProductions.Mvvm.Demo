@@ -2,16 +2,17 @@
 using DCOMProductions.MvvmDemo.Models;
 using DCOMProductions.MvvmDemo.Views;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 
 namespace DCOMProductions.MvvmDemo.ViewModels
 {
-    internal class CustomerViewModel
+    internal class CustomerViewModel 
     {
         private Customer customer;
-        private CustomerInfoViewModel childViewModel;
+        private CustomerInfoViewModel customerInfoMessage;
 
         /// <summary>
         /// Initializes a new instance of the CustomerViewModel class.
@@ -19,7 +20,7 @@ namespace DCOMProductions.MvvmDemo.ViewModels
         public CustomerViewModel()
         {
             customer = new Customer("Bartek");
-            childViewModel = new CustomerInfoViewModel { Info = "Instantiated in CustomerViewModel() ctor." };
+            customerInfoMessage = new CustomerInfoViewModel ();
             UpdateCommand = new CustomerUpdateCommand(this);
         }
 
@@ -31,8 +32,6 @@ namespace DCOMProductions.MvvmDemo.ViewModels
             get { return customer; }
             
         }
-
-
 
         /// <summary>
         /// Gets the UpdateCommand for the ViewModel.
@@ -50,10 +49,12 @@ namespace DCOMProductions.MvvmDemo.ViewModels
         public void SaveChanged()
         {
             CustomerInfoView view = new CustomerInfoView();
-            view.DataContext = childViewModel;
-            //childViewModel.Info = Customer.Name + " was updated in the database.";
+            view.DataContext = customerInfoMessage;
+            customerInfoMessage.Info = Customer.Name + " was updated in the database.";
 
             view.ShowDialog();
         }
+
+
     }
 }

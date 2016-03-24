@@ -9,10 +9,20 @@
     <Window.DataContext>
         <local:CustomerViewModel />
     </Window.DataContext>
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-        <Label>Customer Name:</Label>
-        <TextBox Width="136" Text="{Binding Customer.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-        <Button Content="Update" Command="{Binding UpdateCommand}"/>
-
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+            <Label>Customer Name:</Label>
+            <TextBox Name="CustomerName" 
+                     Margin="2" 
+                     Width="136" 
+                     Text="{Binding Customer.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     Validation.ErrorTemplate="{x:Null}"
+                     Validation.ValidationAdornerSite="{Binding ElementName=AdornerSite}"/>
+            <Button Content="Update" Command="{Binding UpdateCommand}"/>
+        </StackPanel>
+        <Label Name="AdornerSite"
+            Content="{Binding (Validation.Errors).CurrentItem.ErrorContent, ElementName=CustomerName}" 
+               Foreground="Red" 
+               FontWeight="Bold" />
     </StackPanel>
 </Window>

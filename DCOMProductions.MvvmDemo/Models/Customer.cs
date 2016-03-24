@@ -41,27 +41,57 @@
         #endregion
 
         #region IDataErrorInfor Members
-        public string this[string columnName]
+
+        public string this[string propertyName]
         {
             get
             {
-                if (columnName == "Name")
-                {
-                    if (String.IsNullOrWhiteSpace(Name))
-                    {
-                        Error = "Name cannot be null or empty.";
-                    }
-                    else
-                    {
-                        Error = null;
-                    }
-                    
-                }
-                return null;
+                Error = GetValidationError(propertyName);
+                return Error;
             }
         }
 
-        public string Error { get; private set; }
+        public string Error {
+            get; private set;
+            
+        }
+        #endregion
+
+        #region Validation
+
+        static readonly string[] ValidateProperties =
+        {
+            "Name"
+        };
+        public bool IsValid
+        {
+            get
+            {
+                foreach (string property in ValidateProperties)
+                    if (GetValidationError(property) != null)
+                        return false;
+                return true;
+            }
+        }
+        string GetValidationError(String propertyName)
+        {
+            string error = null;
+            switch (propertyName)
+            {
+                case "Name":
+                    error = ValidateName();
+                    break;
+            }
+            return error;
+        }
+        private string ValidateName()
+        {
+            if (String.IsNullOrWhiteSpace(name))
+            {
+                return "Customer name cannot be empty.";
+            }
+            return null;
+        }
         #endregion
     }
 }
